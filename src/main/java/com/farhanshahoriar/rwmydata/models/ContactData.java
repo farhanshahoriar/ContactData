@@ -11,7 +11,6 @@ public class ContactData {
 	  public String email;
 	  public ContactData() {}
 	  public ContactData(ObjectId _id, String name, String phone, String email) {
-		super();
 		this._id = _id;
 		this.name = name;
 		this.phone = phone;
