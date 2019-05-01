@@ -1,80 +1,92 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://contactdata.herokuapp.com/contacts/
 
 # ContactData
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+A simple API allowing users to interact with contact info.
 
-## Questions Collection [/questions]
+### Allowed HTTPs requests:
+<pre>
+POST    : To create resource 
+PUT     : Update resource
+GET     : Get a resource or list of resources
+DELETE  : To delete resource
+</pre>
 
-### List All Questions [GET]
+### Description Of Usual Server Responses:
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 404 `Not Found` - resource was not found.
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+
+---
+**User attributes:**
+
+- id `(Number)` : unique identifier. 
+- name `(String)` : Name of a person.
+- phone `(String)` : Phone Number. 
+- email `(String)` : email adrress.
+---
+
+## Informations : [/contacts/]
+---
+
+### Get all students[GET]
 
 + Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+[{"_id":"5cbeb852109802230017b7b3","name":"farhan","phone":"01521444","email":"fsss@gmalil"},{"_id":"5cbeb891109802230017b7b4","name":"Naidim","phone":"012421444","email":"nmm@gmalil"},{"_id":"5cbed5d5be500f0004d6cabc","name":"Raju","phone":"01388421444","email":"si.summ@gmalil"},{"_id":"5cbed5ffbe500f0004d6cabd","name":"Niaz","phone":"01488421444","email":"neumm@gmalil"}]
+### Add new student [POST]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "name": "Shuvo",
+            "phone": "01789101112",
+            "email": "fxyzzz@gmail.com"
         }
+
 
 + Response 201 (application/json)
 
     + Headers
 
-            Location: /questions/2
+            Location: /contacts/id
 
     + Body
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+            {   
+                "_id": "5cbc5ea01c9d440000e782fb",
+                "name": "Shuvo",
+                "phone": "01789101112",
+                "email": "fxyzzz@gmail.com"
             }
+            
+## Access Informations by id : [/contacts/{id}]
+
+---
+
+### Get a spacific data [GET]
+
+
++ Parameters
+    + id (number) - ID of the User in the form of a string
+
++ Response 200 (application/json)
+    
+        {
+            "_id": "5cbc5ea01c9d440000e782fb",
+            "name": "Shuvo",
+            "phone": "01789101112",
+            "email": "fxyzzz@gmail.com"   
+        }
+ 
+
+### Delete  a spacific data [DELETE]
+
+
++ Parameters
+    + id (number) - ID of the User in the form of a string
+
++ Response 200
